@@ -153,7 +153,7 @@ static const char *getURL(const char *secret, const char *label,
   }
   sprintf(url, "otpauth://%cotp/%s?secret=%s", totp, encodedLabel, secret);
   if (encoderURL) {
-    const char *encoder = "https://www.google.com/chart?chs=200x200&"
+    const char *encoder = "https://chart.googleapis.com/chart?chs=200x200&"
                           "chld=M|0&cht=qr&chl=";
     const char *encodedURL = urlEncode(url);
     

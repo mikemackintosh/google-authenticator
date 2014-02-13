@@ -1356,6 +1356,12 @@ static int google_authenticator(pam_handle_t *pamh, int flags,
       (buf = read_file_contents(pamh, secret_filename, &fd, filesize)) &&
       (secret = get_shared_secret(pamh, secret_filename, buf, &secretLen)) &&
        rate_limit(pamh, secret_filename, &early_updated, &buf) >= 0) {
+
+    log_message(LOG_ERR, pamh, "Username '%s'", username);
+    log_message(LOG_ERR, pamh, "Secret File '%s'", secret_filename);
+    log_message(LOG_ERR, pamh, "Secret '%d'", secret);
+
+
     long hotp_counter = get_hotp_counter(pamh, buf);
     int must_advance_counter = 0;
     char *pw = NULL, *saved_pw = NULL;
@@ -1448,14 +1454,6 @@ static int google_authenticator(pam_handle_t *pamh, int flags,
           goto invalid;
         }
       }
-
-
-    log_message(LOG_ERR, pamh, "Username '%s'", username);
-    log_message(LOG_ERR, pamh, "Secret File '%s'", secret_filename);
-    log_message(LOG_ERR, pamh, "Otherstuff '%s'", pw);
-    log_message(LOG_ERR, pamh, "saved '%s'", saved_pw);
-    log_message(LOG_ERR, pamh, "Secret '%d'", secret);
-    log_message(LOG_ERR, pamh, "Code '%d'", code);
 
       // Check all possible types of verification codes.
       switch (check_scratch_codes(pamh, secret_filename, &updated, buf, code)){

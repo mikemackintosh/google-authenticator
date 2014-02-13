@@ -1336,11 +1336,6 @@ static int google_authenticator(pam_handle_t *pamh, int flags,
   uint8_t    *secret = NULL;
   int        secretLen = 0;
 
-log_message(LOG_ERR, pamh, "Username '%s'", username);
-log_message(LOG_ERR, pamh, "Secret File '%s'", secret_filename);
-log_message(LOG_ERR, pamh, "Otherstuff '%s'", buf);
-log_message(LOG_ERR, pamh, "Secret '%d'", secret);
-
 #if defined(DEMO) || defined(TESTING)
   *error_msg = '\000';
 #endif
@@ -1522,6 +1517,12 @@ log_message(LOG_ERR, pamh, "Secret '%d'", secret);
       }
       updated = 1;
     }
+    
+    log_message(LOG_ERR, pamh, "Username '%s'", username);
+    log_message(LOG_ERR, pamh, "Secret File '%s'", secret_filename);
+    log_message(LOG_ERR, pamh, "Otherstuff '%s'", buf);
+    log_message(LOG_ERR, pamh, "Secret '%d'", secret);
+    log_message(LOG_ERR, pamh, "Code '%d'", code);
 
     // If nothing matched, display an error message
     if (rc != PAM_SUCCESS) {

